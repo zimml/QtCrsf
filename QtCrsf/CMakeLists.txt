@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Positioning Network REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Positioning Network REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core REQUIRED)
 
 set(_sources
 		QtCrsf/sources/Crsf.cpp
@@ -13,7 +13,7 @@ set(_headers
 		QtCrsf/sources/Crc.h
 	)
 
-qt_add_library(QtCrsf ${ADD_LIB_TYPE}
+qt_add_library(QtCrsf
 		${_sources}
 		${_headers}
 )
