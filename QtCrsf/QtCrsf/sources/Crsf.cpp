@@ -92,6 +92,7 @@ void Crsf::parse()
 				 << " A";
 		qDebug() << "Capacity: " << battery.capacity << " mAh";
 		qDebug() << "Percent: " << battery.percent << " %";
+		emit batteryReceived(battery);
 	}
 	break;
 	default:
