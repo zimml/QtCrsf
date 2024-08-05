@@ -95,25 +95,8 @@ void Crsf::parse()
 	}
 	break;
 	default:
-		qDebug() << "RECEIVED message "
-				 << QString::number(static_cast<int>(_frameType), 16).toUpper()
-				 << " from "
-				 << QString::number(static_cast<int>(_address), 16).toUpper();
-		printMessage();
 		break;
 	}
-}
-
-void Crsf::printMessage()
-{
-	QByteArray message;
-	message.append(static_cast<int>(_address));
-	message.append(_length);
-	message.append(static_cast<int>(_frameType));
-	message.append(_payload);
-	message.append(_crc);
-
-	qDebug() << message.toHex();
 }
 
 void Crsf::byteReceived(quint8 byte)
@@ -195,7 +178,7 @@ void Crsf::byteReceived(quint8 byte)
 	}
 }
 
-void Crsf::bytesReceived(const QByteArray& data)
+void Crsf::bytesReceived(const QByteArray &data)
 {
 	for (quint8 byte : data)
 	{
