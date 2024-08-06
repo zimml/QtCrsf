@@ -110,7 +110,8 @@ public:
 	typedef struct
 	{
 		quint8 subtype;
-		QByteArray data;
+		qint32 packetInterval;
+		qint32 phaseShiftCorrection;
 	} RadioId;
 
 	using QObject::QObject;

@@ -56,12 +56,21 @@ void Crsf::parse()
 	{
 		QDataStream stream(_payload);
 		RadioId radio;
+		quint8 dest;
+		quint8 src;
+		stream >> dest;
+		stream >> src;
 		stream >> radio.subtype;
-		stream >> radio.data;
+		stream >> radio.packetInterval;
+		stream >> radio.phaseShiftCorrection;
 
 		qDebug() << "Receied radio ";
+		qDebug() << "dest: " << dest;
+		qDebug() << "src: " << src;
 		qDebug() << "Subtype: " << radio.subtype;
-		qDebug() << "Data: " << radio.data.toHex();
+		qDebug() << "packet interval: " << radio.packetInterval / 10. << "us"
+				 << 1 / (radio.packetInterval / 10.) * 1e6 << " Hz";
+		qDebug() << "phase shift: " << radio.phaseShiftCorrection;
 	}
 	break;
 	case FrameType::FlightMode:
@@ -96,6 +105,10 @@ void Crsf::parse()
 	}
 	break;
 	default:
+		qDebug() << "MESSAGE " << static_cast<int>(_frameType)
+				 << " not implemented: ";
+		qDebug() << " - len " << _length;
+		qDebug() << " - payload " << _payload.toHex();
 		break;
 	}
 }
