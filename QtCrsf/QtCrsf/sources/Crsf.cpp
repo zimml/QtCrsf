@@ -56,21 +56,22 @@ void Crsf::parse()
 	{
 		QDataStream stream(_payload);
 		RadioId radio;
-		quint8 dest;
-		quint8 src;
-		stream >> dest;
-		stream >> src;
+		Extended extended;
+		stream >> extended.destination;
+		stream >> extended.source;
 		stream >> radio.subtype;
 		stream >> radio.packetInterval;
 		stream >> radio.phaseShiftCorrection;
 
 		qDebug() << "Receied radio ";
-		qDebug() << "dest: " << dest;
-		qDebug() << "src: " << src;
+		qDebug() << "dest: " << extended.destination;
+		qDebug() << "src: " << extended.source;
 		qDebug() << "Subtype: " << radio.subtype;
 		qDebug() << "packet interval: " << radio.packetInterval / 10. << "us"
 				 << 1 / (radio.packetInterval / 10.) * 1e6 << " Hz";
 		qDebug() << "phase shift: " << radio.phaseShiftCorrection;
+
+		emit radioIdReceived(radio, extended);
 	}
 	break;
 	case FrameType::FlightMode:
@@ -94,13 +95,6 @@ void Crsf::parse()
 		battery.capacity = (battery.capacity << 8) | capacity;
 		stream >> battery.percent;
 
-		qDebug() << "Receied battery ";
-		qDebug() << "Voltage: " << static_cast<double>(battery.voltage) / 10.
-				 << " V";
-		qDebug() << "Current: " << static_cast<double>(battery.current) / 10.
-				 << " A";
-		qDebug() << "Capacity: " << battery.capacity << " mAh";
-		qDebug() << "Percent: " << battery.percent << " %";
 		emit batteryReceived(battery);
 	}
 	break;

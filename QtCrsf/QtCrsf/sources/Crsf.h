@@ -70,6 +70,12 @@ public:
 
 	typedef struct
 	{
+		quint8 source;
+		quint8 destination;
+	} Extended;
+
+	typedef struct
+	{
 		qint32 latitude;
 		qint32 longitude;
 		qint16 groundSpeed;
@@ -145,6 +151,7 @@ signals:
 	void linkStatisticsReceived(const LinkStatistics &linkStatistics);
 	void attitudeReceived(const Attitude &attitude);
 	void batteryReceived(const BatterySensor &battery);
+	void radioIdReceived(const RadioId &radioId, const Extended &extended);
 
 private:
 	State _state = State::Start;
